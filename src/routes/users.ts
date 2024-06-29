@@ -3,10 +3,10 @@ import { getUsers, getUser, createUser, updateUser, updateUserAvatar } from "../
 
 const userRouter = Router();
 
-userRouter.get("/users", getUsers);
-userRouter.get("/users/:userId", getUser);
-userRouter.post("/users", createUser);
-userRouter.patch('/users/me', updateUser);
-userRouter.patch('/users/me/avatar', updateUserAvatar);
+userRouter.get("/", getUsers);
+userRouter.post("/", createUser);
+userRouter.get("/:userId", getUser);
+userRouter.patch('/me', updateUser);
+userRouter.patch('/me/avatar', updateUserAvatar);
 
 export default userRouter;
