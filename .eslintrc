@@ -7,14 +7,16 @@
 		"airbnb-base",
 		"plugin:@typescript-eslint/recommended",
 		"plugin:@typescript-eslint/recommended-requiring-type-checking",
-		"prettier"
+		"prettier" // Обратите внимание на правильное имя "prettier"
 	],
 	"parser": "@typescript-eslint/parser",
 	"parserOptions": {
 		"ecmaVersion": "latest",
-		"sourceType": "module"
+		"sourceType": "module",
+		"project": "./tsconfig.json",
+		"tsconfigRootDir": "./"
 	},
-	"plugins": ["@typescript-eslint"],
+	"plugins": ["@typescript-eslint", "prettier"],
 	"settings": {
 		"import/resolver": {
 			"node": {
@@ -36,14 +38,16 @@
 		"no-underscore-dangle": [
 			"error",
 			{
-				"allow": ["_id"] // Разрешаем использование имен с подчеркиванием, например, _id
+				"allow": ["_id"]
 			}
 		],
-		"quotes": [
-			"off" // Отключаем проверку кавычек, можно использовать любые кавычки (одинарные, двойные, шаблонные строки)
-		],
-		"indent": [
-			"off" // Отключаем проверку отступов, можно использовать любые отступы (пробелы, табы, их смесь)
-		]
+		"quotes": ["off"],
+		"indent": ["off"],
+		"no-tabs": "off",
+		"comma-dangle": ["error", "only-multiline"],
+		"operator-linebreak": ["error", "before"],
+		"@typescript-eslint/no-unsafe-assignment": "warn",
+		"@typescript-eslint/no-unsafe-return": "warn",
+		"prettier/prettier": "error"
 	}
 }

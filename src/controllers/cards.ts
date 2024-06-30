@@ -2,7 +2,11 @@ import card from "../models/card";
 import { NextFunction, Request, Response } from "express";
 import BadRequest from "../utils/errors/BadRequest";
 import Forbidden from "../utils/errors/Forbidden";
-import NotFound from "../utils/errors/notFound";
+import NotFound from "utils/errors/NotFound";
+
+interface IRequest extends Request {
+	user?: { _id: string };
+}
 
 export const getCards = (req: Request, res: Response, next: NextFunction) => {
 	card
@@ -11,15 +15,21 @@ export const getCards = (req: Request, res: Response, next: NextFunction) => {
 		.catch(next);
 };
 
-export const createCard = (req: any, res: Response, next: NextFunction) => {
+export const createCard = (
+	req: IRequest,
+	res: Response,
+	next: NextFunction
+) => {
 	const { name, link } = req.body;
+	const userId = req.user?._id;
+
 	card
 		.create({
 			name,
 			link,
-			owner: req.user._id
+			owner: userId
 		})
-		.then((cardData) => res.status(200).send(cardData))
+		.then((cardData) => res.status(201).send(cardData))
 		.catch((err) => {
 			if (err.name === "ValidationError") {
 				next(
@@ -33,17 +43,24 @@ export const createCard = (req: any, res: Response, next: NextFunction) => {
 		});
 };
 
-export const deleteCard = (req: any, res: Response, next: NextFunction) => {
+export const deleteCard = (
+	req: IRequest,
+	res: Response,
+	next: NextFunction
+) => {
+	const { cardId } = req.params;
+	const userId = req.user?._id;
+
 	card
-		.findByIdAndRemove(req.params.cardId)
+		.findByIdAndRemove(cardId)
 		.then((cardData) => {
 			if (!cardData) {
 				throw new NotFound("Карточка по указанному _id не найдена");
-			} else if (cardData.owner.toString() !== req.user._id) {
+			} else if (cardData.owner.toString() !== userId) {
 				throw new Forbidden("Нельзя удалить карточку другого пользователя");
 			} else {
 				card
-					.deleteOne({ _id: req.params.cardId })
+					.deleteOne({ _id: cardId })
 					.then(() => {
 						res.status(200).send({ message: "Карточка удалена" });
 					})
@@ -59,18 +76,24 @@ export const deleteCard = (req: any, res: Response, next: NextFunction) => {
 		});
 };
 
-export const addLikeCard = (req: any, res: Response, next: NextFunction) => {
+export const addLikeCard = (
+	req: IRequest,
+	res: Response,
+	next: NextFunction
+) => {
+	const userId = req.user?._id;
+
 	card
 		.findByIdAndUpdate(
 			req.params.cardId,
-			{ $addToSet: { likes: req.user._id } },
+			{ $addToSet: { likes: userId } },
 			{ new: true, runValidators: true }
 		)
 		.then((cardData) => {
 			if (!cardData) {
 				throw new NotFound("Карточка по указанному _id не найдена");
 			} else {
-				res.status(200).send(cardData);
+				res.status(201).send(cardData);
 			}
 		})
 		.catch((err) => {
@@ -82,11 +105,17 @@ export const addLikeCard = (req: any, res: Response, next: NextFunction) => {
 		});
 };
 
-export const deleteLikeCard = (req: any, res: Response, next: NextFunction) => {
+export const deleteLikeCard = (
+	req: IRequest,
+	res: Response,
+	next: NextFunction
+) => {
+	const userId = req.user?._id;
+
 	card
 		.findByIdAndUpdate(
 			req.params.cardId,
-			{ $pull: { likes: req.user._id } },
+			{ $pull: { likes: userId } },
 			{ new: true }
 		)
 		.then((cardData) => {
