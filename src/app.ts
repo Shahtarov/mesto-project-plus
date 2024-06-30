@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 import helmet from "helmet";
 import { errors } from "celebrate";
 import path from "path";
+import rateLimit from "express-rate-limit";
 
 import router from "./routes";
 import NotFound from "./utils/errors/NotFound";
@@ -23,6 +24,14 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(helmet());
 app.use(requestLogger);
+
+const limiter = rateLimit({
+	windowMs: 15 * 60 * 1000,
+	max: 100,
+	message: "Слишком много запросов с этого IP, пожалуйста, попробуйте позже.",
+	headers: true
+});
+app.use(limiter);
 
 app.post("/signin", login);
 app.post("/signup", createUser);

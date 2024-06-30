@@ -52,7 +52,7 @@ export const deleteCard = (
 	const userId = req.user?._id;
 
 	card
-		.findByIdAndRemove(cardId)
+		.findById(cardId)
 		.then((cardData) => {
 			if (!cardData) {
 				throw new NotFound("Карточка по указанному _id не найдена");

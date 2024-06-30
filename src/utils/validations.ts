@@ -47,6 +47,7 @@ const ABOUT_VALIDATION = Joi.string()
 
 const URL_PATTERN =
 	/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)/;
+
 const AVATAR_VALIDATION = Joi.string()
 	.pattern(URL_PATTERN)
 	.messages({
@@ -56,9 +57,12 @@ const AVATAR_VALIDATION = Joi.string()
 	});
 
 const LINK_VALIDATION = Joi.string()
+	.pattern(URL_PATTERN)
 	.required()
 	.messages({
-		"any.required": `Ссылка ${messages.required}`
+		"any.required": `Ссылка ${messages.required}`,
+		"string.empty": `Ссылка ${messages.empty}`,
+		"string.pattern.base": messages.invalidUrl
 	});
 
 const ID_VALIDATION = Joi.string()
