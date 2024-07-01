@@ -1,8 +1,24 @@
-# Бэкенд Mesto. Каркас API Mesto
+# Backend Mesto. Express API
 
-## Используемые технологии и решения
-- Typescript в качестве основного языка проекта
-- Mongodb и ODM Mongoose для хранения данных пользователей
-- Node.js в качестве среды выполнения
+## Project Information
 
-Перед отправкой работы на проверку убедитесь что она соответствует требованиям проектной работы
+Backend API for the instagram analog service with registration and the ability to share photos
+
+---
+
+## The technology stack used
+
+-  TypeScript
+-  Node js
+-  Express
+-  MogoDB
+-  Mongoose
+-  Webpack
+-  bcrypt
+-  jsonwebtoke
+-  helmet
+-  validator
+-  winston
+-  celebrate
+
+---
