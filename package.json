@@ -1,5 +1,5 @@
 {
-	"name": "Backend API Mesto",
+	"name": "API-Mesto",
 	"version": "1.0.0",
 	"description": "Backend API of the photo adding app",
 	"main": "dist/app.js",

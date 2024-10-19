@@ -2,7 +2,7 @@ import card from "../models/card";
 import { NextFunction, Request, Response } from "express";
 import BadRequest from "../utils/errors/BadRequest";
 import Forbidden from "../utils/errors/Forbidden";
-import NotFound from "utils/errors/NotFound";
+import NotFound from "../utils/errors/notFound"
 
 interface IRequest extends Request {
 	user?: { _id: string };

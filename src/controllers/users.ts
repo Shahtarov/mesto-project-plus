@@ -4,7 +4,7 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 
 import secretKey from "../utils/secretKey";
-import NotFound from "../utils/errors/NotFound";
+import NotFound from "../utils/errors/notFound";
 import Conflict from "../utils/errors/Conflict";
 import BadRequest from "../utils/errors/BadRequest";
 

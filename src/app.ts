@@ -6,7 +6,7 @@ import path from "path";
 import rateLimit from "express-rate-limit";
 
 import router from "./routes";
-import NotFound from "./utils/errors/NotFound";
+import NotFound from "./utils/errors/notFound";
 import "dotenv/config";
 import { createUser, login } from "controllers/users";
 import auth from "middlewares/auth";
